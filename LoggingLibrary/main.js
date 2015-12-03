@@ -1,13 +1,13 @@
 var model = {
-    "Execution": "test",
-    "AppName": "IC Test Application",
-    "AppVersion": "v1.0.1",
-    "MessageType": "Info",
-    "isBusinessEvent": "true",
-    "Message": "This is a test Message",
-    "MessageDetails": "StackTrace Coming Soon...",
+    "AppGroup": "",
+    "AppName": "",
+    "AppVersion": "",
+    "MessageType": "",
+    "isBusinessEvent": "",
+    "Message": "",
+    "MessageDetails": "",
     "AdditionalProperties": {
-        "Error Number": "1234"
+        "LineOfBuisness": "Enterprise Collaboration"
     }
 };
 
@@ -35,10 +35,18 @@ console.error = function() {
 function logerrors(logarguments, messageType){
   
   model.MessageType = messageType;
-  model.Message = logarguments;
+  model.AppName = ApplicationName;
+  model.Execution = ApplicationGroup;
+  model.AppVersion = ApplicationVersion;
+  model.Message = logarguments[0];
+  if(logarguments[1])
+  {
+    model.MessageDetails = logarguments[1];
+  }
+  model.isBusinessEvent = "true"
   
-  debugger;
-  xhttp.open("POST", "http://dev.digitaladrenalin.net:3000/RedisFacade", true);
+
+  xhttp.open("POST", "http://10.150.165.18/Redis-Facade-Service/api/Logging", true);
   xhttp.setRequestHeader("Content-type", "application/json");
-  xhttp.send("fname=Henry&lname=Ford");
+  xhttp.send(JSON.stringify(model));
 }
